@@ -1,0 +1,26 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars_files:
+  - vars/namespaces.yml
+  vars_prompt:
+  - name: "ocp"
+    prompt: "Enter OCP Master URL"
+    private: no
+  - name: "ocp_username"
+    prompt: "Enter OCP Admin username"
+    private: no
+  - name: "ocp_password"
+    prompt: "Enter OCP Admin password"
+    private: yes
+  tasks:
+  - name: "[Include Role] ocp-get-token"
+    include_role:
+      name: ocp-get-token
+  - name: "Include Role: strimzi-operator"
+    include_role:
+      name: strimzi-operator
+    vars:
+      namespace: "{{ item.namespace }}"
+      state: absent
+    with_items: "{{ namespaces | sort(attribute='state') }}"

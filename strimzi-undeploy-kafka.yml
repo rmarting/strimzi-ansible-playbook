@@ -1,0 +1,28 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars_files:
+  - vars/namespaces.yml
+  vars_prompt:
+  - name: "ocp"
+    prompt: "Enter OCP Master URL"
+    private: no
+  - name: "ocp_username"
+    prompt: "Enter OCP Developer username"
+    private: no
+  - name: "ocp_password"
+    prompt: "Enter OCP Developer password"
+    private: yes
+  tasks:
+  - name: "[Include Role] ocp-get-token"
+    include_role:
+      name: ocp-get-token
+  - name: "Include Role: strimzi-kafka"
+    include_role:
+      name: strimzi-kafka
+    vars:
+      namespace: "{{ item.namespace }}"
+      user: "{{ item.user }}"
+      state: absent
+      kafka_cluster_name: my-kafka
+    with_items: "{{ namespaces | sort(attribute='state') }}"

@@ -1,0 +1,71 @@
+---
+- name: "[k8s] Create Strimzi Objects - Service Account"
+  k8s:
+    host: "{{ ocp }}"
+    api_key: "{{ ocp_token }}"
+    verify_ssl: no
+    namespace: "{{ namespace }}"
+    state: "{{ state }}"
+    definition: "{{ lookup('file', '010-ServiceAccount-strimzi-cluster-operator.yaml') }}"
+
+- name: "[k8s] Create Strimzi Objects - CO - RoleBinding"
+  k8s:
+    host: "{{ ocp }}"
+    api_key: "{{ ocp_token }}"
+    verify_ssl: no
+    namespace: "{{ namespace }}"
+    state: "{{ state }}"
+    definition: "{{ lookup('template', '020-RoleBinding-strimzi-cluster-operator.yaml.j2') }}"
+
+- name: "[k8s] Create Strimzi Objects - CO - ClusterRoleBinding"
+  k8s:
+    host: "{{ ocp }}"
+    api_key: "{{ ocp_token }}"
+    verify_ssl: no
+    namespace: "{{ namespace }}"
+    state: "{{ state }}"
+    definition: "{{ lookup('template', '021-ClusterRoleBinding-strimzi-cluster-operator.yaml.j2') }}"
+
+- name: "[k8s] Create Strimzi Objects - CO - ClusterRoleBinding"
+  k8s:
+    host: "{{ ocp }}"
+    api_key: "{{ ocp_token }}"
+    verify_ssl: no
+    namespace: "{{ namespace }}"
+    state: "{{ state }}"
+    definition: "{{ lookup('template', '030-ClusterRoleBinding-strimzi-cluster-operator-kafka-broker-delegation.yaml.j2') }}"
+
+- name: "[k8s] Create Strimzi Objects - EO - RoleBinding"
+  k8s:
+    host: "{{ ocp }}"
+    api_key: "{{ ocp_token }}"
+    verify_ssl: no
+    namespace: "{{ namespace }}"
+    state: "{{ state }}"
+    definition: "{{ lookup('template', '031-RoleBinding-strimzi-cluster-operator-entity-operator-delegation.yaml.j2') }}"
+
+- name: "[k8s] Create Strimzi Objects - TO - RoleBinding"
+  k8s:
+    host: "{{ ocp }}"
+    api_key: "{{ ocp_token }}"
+    verify_ssl: no
+    namespace: "{{ namespace }}"
+    state: "{{ state }}"
+    definition: "{{ lookup('template', '032-RoleBinding-strimzi-cluster-operator-topic-operator-delegation.yaml.j2') }}"
+
+- name: "[k8s] Create Strimzi Objects - CO - Deployment"
+  k8s:
+    host: "{{ ocp }}"
+    api_key: "{{ ocp_token }}"
+    verify_ssl: no
+    namespace: "{{ namespace }}"
+    state: "{{ state }}"
+    definition: "{{ lookup('template', '050-Deployment-strimzi-cluster-operator.yaml.j2') }}"
+
+- name: "[command] Assign strimzi-admin role to user"
+  command: "oc --token='{{ ocp_token }}' adm policy add-cluster-role-to-user strimzi-admin {{ user }}"
+  when: state == "present"
+
+- name: "[command] Assign view role to user"
+  command: "oc --token='{{ ocp_token }}' policy add-role-to-user view {{ user }} -n {{ namespace }}"
+  when: state == "present"

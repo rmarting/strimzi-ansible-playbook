@@ -1,0 +1,108 @@
+---
+- name: "[k8s] Create Strimzi Objects - ClusterRole - Strimzi Admin"
+  k8s:
+    host: "{{ ocp }}"
+    api_key: "{{ ocp_token }}"
+    verify_ssl: no
+    namespace: "{{ namespace }}"
+    state: "{{ state }}"
+    definition: "{{ lookup('file', '010-ClusterRole-strimzi-admin.yaml') }}"
+
+- name: "[k8s] Create Strimzi Objects - CO - ClusterRole - Namespaced"
+  k8s:
+    host: "{{ ocp }}"
+    api_key: "{{ ocp_token }}"
+    verify_ssl: no
+    namespace: "{{ namespace }}"
+    state: "{{ state }}"
+    definition: "{{ lookup('file', '020-ClusterRole-strimzi-cluster-operator-role.yaml') }}"
+
+- name: "[k8s] Create Strimzi Objects - CO - ClusterRole - Global"
+  k8s:
+    host: "{{ ocp }}"
+    api_key: "{{ ocp_token }}"
+    verify_ssl: no
+    namespace: "{{ namespace }}"
+    state: "{{ state }}"
+    definition: "{{ lookup('file', '021-ClusterRole-strimzi-cluster-operator-role.yaml') }}"
+
+- name: "[k8s] Create Strimzi Objects - CO - ClusterRole"
+  k8s:
+    host: "{{ ocp }}"
+    api_key: "{{ ocp_token }}"
+    verify_ssl: no
+    namespace: "{{ namespace }}"
+    state: "{{ state }}"
+    definition: "{{ lookup('file', '030-ClusterRole-strimzi-kafka-broker.yaml') }}"
+
+- name: "[k8s] Create Strimzi Objects - EO - ClusterRole"
+  k8s:
+    host: "{{ ocp }}"
+    api_key: "{{ ocp_token }}"
+    verify_ssl: no
+    namespace: "{{ namespace }}"
+    state: "{{ state }}"
+    definition: "{{ lookup('file', '031-ClusterRole-strimzi-entity-operator.yaml') }}"
+
+- name: "[k8s] Create Strimzi Objects - TO - ClusterRole"
+  k8s:
+    host: "{{ ocp }}"
+    api_key: "{{ ocp_token }}"
+    verify_ssl: no
+    namespace: "{{ namespace }}"
+    state: "{{ state }}"
+    definition: "{{ lookup('file', '032-ClusterRole-strimzi-topic-operator.yaml') }}"
+
+- name: "[k8s] Create Strimzi Objects - CRD - Kafka"
+  k8s:
+    host: "{{ ocp }}"
+    api_key: "{{ ocp_token }}"
+    verify_ssl: no
+    namespace: "{{ namespace }}"
+    state: "{{ state }}"
+    definition: "{{ lookup('file', '040-Crd-kafka.yaml') }}"
+
+- name: "[k8s] Create Strimzi Objects - CRD - KafkaConnect"
+  k8s:
+    host: "{{ ocp }}"
+    api_key: "{{ ocp_token }}"
+    verify_ssl: no
+    namespace: "{{ namespace }}"
+    state: "{{ state }}"
+    definition: "{{ lookup('file', '041-Crd-kafkaconnect.yaml') }}"
+
+- name: "[k8s] Create Strimzi Objects - CRD - KafkaConnectS2I"
+  k8s:
+    host: "{{ ocp }}"
+    api_key: "{{ ocp_token }}"
+    verify_ssl: no
+    namespace: "{{ namespace }}"
+    state: "{{ state }}"
+    definition: "{{ lookup('file', '042-Crd-kafkaconnects2i.yaml') }}"
+
+- name: "[k8s] Create Strimzi Objects - CRD - KafkaTopic"
+  k8s:
+    host: "{{ ocp }}"
+    api_key: "{{ ocp_token }}"
+    verify_ssl: no
+    namespace: "{{ namespace }}"
+    state: "{{ state }}"
+    definition: "{{ lookup('file', '043-Crd-kafkatopic.yaml') }}"
+
+- name: "[k8s] Create Strimzi Objects - CRD - KafkaUser"
+  k8s:
+    host: "{{ ocp }}"
+    api_key: "{{ ocp_token }}"
+    verify_ssl: no
+    namespace: "{{ namespace }}"
+    state: "{{ state }}"
+    definition: "{{ lookup('file', '044-Crd-kafkauser.yaml') }}"
+
+- name: "[k8s] Create Strimzi Objects - CRD - KakfaMirrorMarker"
+  k8s:
+    host: "{{ ocp }}"
+    api_key: "{{ ocp_token }}"
+    verify_ssl: no
+    namespace: "{{ namespace }}"
+    state: "{{ state }}"
+    definition: "{{ lookup('file', '045-Crd-kafkamirrormaker.yaml') }}"

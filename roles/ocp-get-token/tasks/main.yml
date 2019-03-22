@@ -1,0 +1,16 @@
+---
+- name: "[set_fact] Basic Auth from User and Password"
+  set_fact:
+    basicauth: "{{ ocp_username }}:{{ ocp_password }}"
+- name: "[set_fact] Base64 Encode Basic Auth"
+  set_fact:
+    base64auth: "{{ basicauth | b64encode }}"
+- name: "[shell] Curl GET OpenShift Session Token" 
+  shell: 'curl -k -H "Authorization: Basic {{ base64auth }}" -I {{ ocp }}/oauth/authorize?response_type=token\&client_id=openshift-challenging-client | grep -oP "access_token=\K[^&]*"'
+  no_log: False
+  args:
+    warn: False
+  register: result
+- name: "[set_fact] Set ocp_token variable"
+  set_fact:
+    ocp_token: "{{ result.stdout }}"

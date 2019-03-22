@@ -1,0 +1,42 @@
+---
+- name: "[k8s] Create ConfigMap {{ kafka_cluster_name }}-custom-zookeeper-config"
+  k8s:
+    host: "{{ ocp }}"
+    api_key: "{{ ocp_token }}"
+    verify_ssl: no
+    namespace: "{{ namespace }}"
+    state: "{{ state }}"
+    definition:
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: "{{ kafka_cluster_name }}-custom-zookeeper-config"
+        namespace: "{{ namespace }}"
+      data:
+        log4j.properties: "{{ lookup('file', 'zookeeper-configmap/log4j.properties') }}"
+
+- name: "[k8s] Create ConfigMap {{ kafka_cluster_name }}-custom-kafka-config"
+  k8s:
+    host: "{{ ocp }}"
+    api_key: "{{ ocp_token }}"
+    verify_ssl: no
+    namespace: "{{ namespace }}"
+    state: "{{ state }}"
+    definition:
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: "{{ kafka_cluster_name }}-custom-kafka-config"
+        namespace: "{{ namespace }}"
+      data:
+        log4j.properties: "{{ lookup('file', 'kafka-configmap/log4j.properties') }}"
+
+
+- name: "[k8s] Create Kafka Cluster {{ kafka_cluster_name }}"
+  k8s:
+    host: "{{ ocp }}"
+    api_key: "{{ ocp_token }}"
+    verify_ssl: no
+    namespace: "{{ namespace }}"
+    state: "{{ state }}"
+    definition: "{{ lookup('template', 'kafka-cluster.yaml.j2') }}"

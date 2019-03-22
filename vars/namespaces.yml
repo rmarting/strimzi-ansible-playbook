@@ -1,0 +1,2 @@
+namespaces:
+- { namespace: strimzi, user: developer, state: "{{ state }}" }
