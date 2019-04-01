@@ -1,2 +1,2 @@
 namespaces:
-- { namespace: strimzi, user: developer, state: "{{ state }}" }
+- { namespace: amq-streams-1-0, user: developer, state: "{{ state }}" }
