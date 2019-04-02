@@ -1,11 +1,11 @@
-# Strimzi Ansible Playbook
+# Red Hat AMQ Streams Ansible Playbook
 
 ## About
 This [Ansible Playbook](http://docs.ansible.com/ansible/playbooks.html) includes
 a set of different roles:
 
-* **strimzi-openshift**: Deploy or undeploy cluster components of Strimzi.
-* **strimzi-operator**: Deploy or undeploy namespace componentes of Strimzi
+* **strimzi-openshift**: Deploy or undeploy cluster components of Red Hat AMQ Streams.
+* **strimzi-operator**: Deploy or undeploy namespace componentes of Red Hat AMQ Streams.
 * **ocp-get-token**: To get an OCP User Auth token
 
 **NOTE:** This playbooks must be executed with **cluster-admin** users.
@@ -26,10 +26,10 @@ These variables will be defined in YAML files in [vars](./vars) folder.
 **namespaces.yml** file defines the list of different namespaces to manage. This file is similar to:
 
     namespaces:
-    - { namespace: strimzi, user: developer, state: "{{ state }}" }
+    - { namespace: amq-streams, user: developer, state: "{{ state }}" }
 
-* **namespace**: Namespace to (un)deploy Strimzi
-* **user**: User to manage Strimzi. This user is a non cluster-admin user.
+* **namespace**: Namespace to (un)deploy Red Hat AMQ Streams
+* **user**: User to manage Red Hat AMQ Streams. This user is a non cluster-admin user.
 * **state**: Defined to deploy (*present*) or undeploy (*absent*) objects
 
 ### strimzi-openshift role
@@ -95,8 +95,8 @@ To undeploy this playbook:
 
 ## Main References
 
-* [Strimzi.io Documentation](https://strimzi.io/documentation/)
-* [Why do I need cluster admin privileges to install Strimzi?](https://strimzi.io/docs/master/#why_do_i_need_cluster_admin_privileges_to_install_strimzi)
+* [Red Hat AMQ Streams](https://access.redhat.com/products/red-hat-amq)
+* [Using AMQ Streams on OpenShift Container Platform](https://access.redhat.com/documentation/en-us/red_hat_amq/7.2/html-single/using_amq_streams_on_openshift_container_platform)
 * [Ansible Documentation](http://docs.ansible.com/ansible/)
 * [k8s_facts - Describe Kubernetes Objects](https://docs.ansible.com/ansible/latest/modules/k8s_facts_module.html#k8s-facts-module)
 * [k8s - Manage Kubernetes Objects](https://docs.ansible.com/ansible/latest/modules/k8s_module.html)
