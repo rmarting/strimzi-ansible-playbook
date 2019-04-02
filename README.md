@@ -5,8 +5,8 @@ This [Ansible Playbook](http://docs.ansible.com/ansible/playbooks.html) includes
 a set of different roles:
 
 * **strimzi-openshift**: Deploy or undeploy cluster components of Strimzi.
-* **strimzi-operator**: Deploy or undeploy namespace componentes of Strimzi
-* **ocp-get-token**: To get an OCP User Auth token
+* **strimzi-operator**: Deploy or undeploy namespace componentes of Strimzi.
+* **ocp-get-token**: To get an OCP User Auth token.
 
 **NOTE:** This playbooks must be executed with **cluster-admin** users.
 
