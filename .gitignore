@@ -1,2 +1,4 @@
 # IDE Resources
 .idea/
+*.retry
+
